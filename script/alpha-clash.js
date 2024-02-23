@@ -4,6 +4,8 @@ let isGameOn = false;
 
 const artBoard = document.getElementById('art-board');
 
+const modalBox = document.getElementById('modal-box')
+
 function handleKeyboardButtonPress(event){
 
     if(isGameOn == false) return;
@@ -107,3 +109,15 @@ function gameOver(){
     artBoard.style.background = `linear-gradient(#FFFFFFB3 100%,red)`
     
 }
+
+function modalOpen(e){
+    if(e.clientY < 20){
+        modalBox.style.display = "flex"
+    }
+}
+
+function modalClose(){
+    modalBox.style.display = "none"
+}
+
+document.body.onmousemove = modalOpen;
