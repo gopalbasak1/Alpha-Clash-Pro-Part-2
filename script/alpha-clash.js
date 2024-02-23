@@ -1,6 +1,13 @@
-const audio = new Audio();''
+const audio = new Audio();
+
+let isGameOn = false;
+
+const artBoard = document.getElementById('art-board');
 
 function handleKeyboardButtonPress(event){
+
+    if(isGameOn == false) return;
+
     const playerPressed = event.key;
 
     //stop the game if pressed 'Esc'
@@ -38,8 +45,14 @@ function handleKeyboardButtonPress(event){
         const updatedLife = currentLife - 1;
         setTextElementValueById('current-life', updatedLife);
 
+        const updateLifePercentage = (updatedLife / 5) * 100;
+
+        artBoard.style.background = `linear-gradient(#FFFFFFB3 ${updateLifePercentage}%,red)`
+
         if(updatedLife === 0){
             gameOver();
+            audio.src = "../Audio/exit.mp3";
+             audio.play()
         }
      }
 
@@ -72,7 +85,10 @@ function play(){
     setTextElementValueById('current-life', 5)
     setTextElementValueById('current-score', 0)
 
+    isGameOn = true;
+
     continueGame();
+
 }
 
 function gameOver(){
@@ -86,6 +102,8 @@ function gameOver(){
     const currentAlphabet = getElementTextById('current-alphabet');
     removeBackgroundColorById(currentAlphabet);
 
-    audio.src = "../Audio/exit.mp3";
-    audio.play()
+    isGameOn = false;
+
+    artBoard.style.background = `linear-gradient(#FFFFFFB3 100%,red)`
+    
 }
