@@ -1,3 +1,5 @@
+const audio = new Audio();''
+
 function handleKeyboardButtonPress(event){
     const playerPressed = event.key;
 
@@ -14,25 +16,13 @@ function handleKeyboardButtonPress(event){
     //check matched or not
      if(playerPressed === expectedAlphabet){
         console.log('you will win the match');
+        audio.src = "../Audio/success.wav";
+        audio.play()
 
         const currentScore = getTextElementValueById('current-score');
         const updatedScore = currentScore + 1;
         setTextElementValueById('current-score', updatedScore);
 
-        
-
-
-        //----------------------------------------
-        // //update score:
-        // //1. get the current score
-        // const currentScoreElement = document.getElementById('current-score');
-        // const currentScoreText = currentScoreElement.innerText;
-        // const currentScore = parseInt(currentScoreText);
-        
-        // //2. increase the score by 1
-        // const newScore = currentScore + 1;
-        // //3. show the updated score
-        // currentScoreElement.innerText = newScore;
 
         // start a new round
         removeBackgroundColorById(expectedAlphabet)
@@ -41,6 +31,9 @@ function handleKeyboardButtonPress(event){
      else{
         console.log('you missed the point');
 
+        audio.src = "../Audio/wrong.wav";
+        audio.play()
+
         const currentLife = getTextElementValueById('current-life');
         const updatedLife = currentLife - 1;
         setTextElementValueById('current-life', updatedLife);
@@ -48,16 +41,6 @@ function handleKeyboardButtonPress(event){
         if(updatedLife === 0){
             gameOver();
         }
-
-        //----------------------------------------------
-        // //step-1: get the current Life number
-        // const currentLifeElement = document.getElementById('current-life');
-        // const currentLifeText = currentLifeElement.innerText;
-        // const currentLife = parseInt(currentLifeText);
-        // //step-2: reduce the life count
-        // const newLife = currentLife - 1;
-        // //step-3: display the updated life count
-        // currentLifeElement.innerText = newLife;
      }
 
 }
@@ -101,5 +84,8 @@ function gameOver(){
     setTextElementValueById('game-score', lastScore);
     // clear the last selected alphabet highlight
     const currentAlphabet = getElementTextById('current-alphabet');
-    removeBackgroundColorById(currentAlphabet)
+    removeBackgroundColorById(currentAlphabet);
+
+    audio.src = "../Audio/exit.mp3";
+    audio.play()
 }
